@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE STUDENT OASIS: ACADEMY 2027+ | Ashby Navis & Tennyson</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --neon-cyan: #00f3ff;
+      --neon-magenta: #ff007f;
+      --neon-purple: #9d4edd;
+      --neon-amber: #ffaa00;
+      --neon-emerald: #00ffa3;
+      --hud-bg: rgba(6, 11, 25, 0.88);
+      --border-glow: rgba(0, 243, 255, 0.4);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #030712;
+      font-family: 'JetBrains Mono', monospace;
+      color: #e2e8f0;
+      user-select: none;
+    }
+
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Chakra Petch', sans-serif;
+    }
+
+    /* CRT Scanline Filter */
+    .scanlines::before {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.45) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+      z-index: 40;
+      background-size: 100% 3px, 4px 100%;
+      pointer-events: none;
+      opacity: 0.65;
+    }
+
+    /* Glowing borders and text */
+    .glow-cyan {
+      box-shadow: 0 0 15px rgba(0, 243, 255, 0.35), inset 0 0 15px rgba(0, 243, 255, 0.15);
+      border-color: rgba(0, 243, 255, 0.7);
+    }
+    .text-glow-cyan {
+      text-shadow: 0 0 8px rgba(0, 243, 255, 0.8);
+    }
+    .text-glow-magenta {
+      text-shadow: 0 0 8px rgba(255, 0, 127, 0.8);
+    }
+
+    /* Custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(10, 16, 30, 0.6);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 243, 255, 0.4);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 243, 255, 0.8);
+    }
+
+    /* Hexagon/Cyber Cutout Button */
+    .cyber-btn {
+      position: relative;
+      clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+      transition: all 0.25s ease;
+    }
+    .cyber-btn:hover {
+      filter: brightness(1.25);
+      transform: translateY(-1px);
+    }
+
+    /* Pulse animation */
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+    .pulse-glow {
+      animation: pulseGlow 2.5s infinite ease-in-out;
+    }
+
+    /* Pipeline Status Indicator */
+    @keyframes zapStream {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(200%); }
+    }
+    .zap-flow-bar {
+      position: relative;
+      overflow: hidden;
+    }
+    .zap-flow-bar::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 40%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.9), transparent);
+      animation: zapStream 1.8s infinite linear;
+    }
+  </style>
+</head>
+<body class="w-screen h-screen relative bg-[#02050e] overflow-hidden select-none">
+
+  <!-- Interactive Space Canvas -->
+  <canvas id="oasisCanvas" class="absolute inset-0 w-full h-full z-0 cursor-grab active:cursor-grabbing"></canvas>
+
+  <!-- CRT Screen Overlay Container -->
+  <div id="screenOverlay" class="scanlines absolute inset-0 pointer-events-none z-30 transition-opacity duration-300"></div>
+
+  <!-- TOP HUD: Command Bar & Academy Metrics -->
+  <header class="absolute top-0 left-0 right-0 z-20 flex flex-wrap items-center justify-between px-4 py-3 bg-gradient-to-b from-[#060b19ee] via-[#081026bb] to-transparent border-b border-cyan-500/20 backdrop-blur-md">
+    <div class="flex items-center space-x-3">
+      <div class="w-9 h-9 rounded-lg bg-cyan-950/70 border border-cyan-400 flex items-center justify-center text-cyan-300 font-bold text-lg shadow-[0_0_12px_rgba(0,243,255,0.4)]">
+        Ω
+      </div>
+      <div>
+        <div class="flex items-center space-x-2">
+          <span class="text-sm md:text-base font-bold tracking-widest text-white font-display">THE STUDENT OASIS</span>
+          <span class="text-[10px] tracking-wider px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-400/40">v2027.4</span>
+        </div>
+        <p class="text-[11px] text-gray-400 font-mono tracking-tight">ASHBY NAVIS & TENNYSON • COGNITIVE TELEMETRY GRID</p>
+      </div>
+    </div>
+
+    <!-- Center Navigation Quick-Jumps -->
+    <div class="hidden xl:flex items-center space-x-1.5 bg-[#0b1329]/80 border border-cyan-900/60 rounded-full px-3 py-1">
+      <span class="text-[11px] text-cyan-400 font-mono mr-2">WARP:</span>
+      <button onclick="zoomToPlanetById('prompt')" class="px-2.5 py-1 text-xs rounded-full hover:bg-cyan-500/20 text-gray-300 hover:text-cyan-300 transition">AI Prompt</button>
+      <button onclick="zoomToPlanetById('quantum')" class="px-2.5 py-1 text-xs rounded-full hover:bg-purple-500/20 text-gray-300 hover:text-purple-300 transition">Quantum</button>
+      <button onclick="zoomToPlanetById('synbio')" class="px-2.5 py-1 text-xs rounded-full hover:bg-emerald-500/20 text-gray-300 hover:text-emerald-300 transition">SynBio</button>
+      <button onclick="zoomToPlanetById('neural')" class="px-2.5 py-1 text-xs rounded-full hover:bg-pink-500/20 text-gray-300 hover:text-pink-300 transition">Neural BCI</button>
+      <button onclick="zoomToPlanetById('fusion')" class="px-2.5 py-1 text-xs rounded-full hover:bg-amber-500/20 text-gray-300 hover:text-amber-300 transition">Fusion</button>
+      <button onclick="zoomToPlanetById('robotics')" class="px-2.5 py-1 text-xs rounded-full hover:bg-blue-500/20 text-gray-300 hover:text-blue-300 transition">Robotics</button>
+    </div>
+
+    <!-- Right Controls: Audio, Scanline, XP and Codex Status -->
+    <div class="flex items-center space-x-3 mt-2 sm:mt-0">
+      <!-- Student XP Bar -->
+      <div class="flex items-center space-x-2 bg-black/60 border border-purple-500/30 rounded-lg px-3 py-1.5">
+        <div class="text-right">
+          <div class="text-[10px] text-purple-300 uppercase tracking-wider">CADET RANK</div>
+          <div id="playerLevelText" class="text-xs font-bold text-white font-display">LVL 1 • NEOPHYTE</div>
+        </div>
+        <div class="w-16 md:w-24 bg-gray-800 rounded-full h-2 overflow-hidden border border-purple-400/30">
+          <div id="xpProgressBar" class="bg-gradient-to-r from-purple-500 to-cyan-400 h-full w-[15%] transition-all duration-500"></div>
+        </div>
+        <span id="xpScoreLabel" class="text-xs text-cyan-300 font-mono font-bold">150 XP</span>
+      </div>
+
+      <!-- Quick Toggles -->
+      <div class="flex items-center space-x-1.5">
+        <button id="audioToggleBtn" title="Toggle Synthesizer Sound" class="w-8 h-8 rounded border border-cyan-500/40 bg-[#0d1833]/70 hover:bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-sm transition">
+          🔊
+        </button>
+        <button id="scanlineToggleBtn" title="Toggle CRT Scanline Shader" class="w-8 h-8 rounded border border-cyan-500/40 bg-[#0d1833]/70 hover:bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-xs font-mono transition">
+          CRT
+        </button>
+        <button onclick="resetSolarView()" title="Overview Galaxy View" class="px-2.5 h-8 rounded border border-cyan-400 bg-cyan-950/60 hover:bg-cyan-500/30 text-cyan-200 text-xs font-mono font-bold flex items-center space-x-1 transition">
+          <span>🌌</span><span class="hidden md:inline">SYSTEM MAP</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- BOTTOM STATUS: Zapier Automation Telemetry Monitor -->
+  <footer class="absolute bottom-3 left-4 right-4 z-20 pointer-events-auto flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2 p-2.5 rounded-xl bg-[#060b18f0] border border-cyan-500/30 backdrop-blur-md text-xs font-mono shadow-[0_0_20px_rgba(0,0,0,0.8)]">
+    <!-- Zapier Live Telemetry -->
+    <div class="flex items-center space-x-3">
+      <div class="flex items-center space-x-1.5 px-2 py-1 rounded bg-[#ff4a00]/15 border border-[#ff4a00]/40 text-[#ff8142]">
+        <span class="w-2 h-2 rounded-full bg-[#ff4a00] animate-ping"></span>
+        <span class="font-bold text-[11px] tracking-wide">ZAPIER ACTIVE ENGINE</span>
+      </div>
+      <div class="hidden sm:block text-gray-400 text-[11px]">
+        Pipeline: <span class="text-cyan-300 font-mono">Catch Webhook</span> &rarr; <span class="text-purple-300 font-mono">Zapier Table Ingestion</span> &rarr; <span class="text-emerald-300 font-mono">OpenAI Professor Quantum Synth</span>
+      </div>
+    </div>
+
+    <!-- Active Pipeline Activity Feed -->
+    <div class="flex items-center justify-between md:justify-end space-x-4">
+      <div class="flex items-center space-x-2">
+        <span class="text-gray-400 text-[11px]">STATUS:</span>
+        <span id="pipelineStatusText" class="text-emerald-400 font-bold text-[11px]">READY FOR SUBMISSION</span>
+        <div class="w-16 h-1.5 bg-gray-800 rounded-full zap-flow-bar border border-cyan-500/30"></div>
+      </div>
+      <button onclick="openZapierInspector()" class="px-2.5 py-1 rounded bg-cyan-900/40 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-[10px] tracking-wider transition">
+        INSPECT PAYLOAD
+      </button>
+    </div>
+  </footer>
+
+  <!-- FLOATING SIDEBAR: Holo-Terminal HUD (Hidden by default, slides out when planet is selected) -->
+  <aside id="planetaryHoloHUD" class="fixed top-16 bottom-16 right-4 w-[92vw] sm:w-[460px] lg:w-[500px] z-30 translate-x-[110%] transition-transform duration-500 ease-out flex flex-col bg-[#080e22f2] border-2 rounded-2xl shadow-[0_0_40px_rgba(0,243,255,0.25)] backdrop-blur-xl overflow-hidden glow-cyan">
+    
+    <!-- HUD Header -->
+    <div id="hudHeader" class="p-4 border-b border-cyan-500/30 bg-gradient-to-r from-cyan-950/70 via-indigo-950/40 to-transparent flex items-start justify-between">
+      <div>
+        <div class="flex items-center space-x-2">
+          <span id="hudSectorBadge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-400/40">SECTOR A: STEM 2027</span>
+          <span id="hudCoordinates" class="text-[10px] font-mono text-gray-400">RA 19h 50m / DEC +08°52'</span>
+        </div>
+        <h2 id="hudPlanetTitle" class="text-2xl font-bold font-display text-white text-glow-cyan tracking-wide mt-1">PLANET NAME</h2>
+        <p id="hudCareerPathway" class="text-xs font-mono text-cyan-300 mt-0.5 flex items-center">
+          <span class="text-gray-400 mr-1.5">Primary 2027+ Career:</span> <strong class="text-amber-300">Cognitive Architect</strong>
+        </p>
+      </div>
+      <button onclick="closePlanetHUD()" class="w-8 h-8 rounded-lg bg-cyan-900/30 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/30 flex items-center justify-center font-bold text-lg transition">
+        ✕
+      </button>
+    </div>
+
+    <!-- HUD Tab Selectors -->
+    <div class="flex border-b border-cyan-500/20 bg-[#060a1a] text-xs font-mono">
+      <button id="tabBtnBriefing" onclick="switchHudTab('briefing')" class="flex-1 py-2.5 text-center text-cyan-300 font-bold border-b-2 border-cyan-400 bg-cyan-500/10 transition">
+        1. BRIEFING & LORE
+      </button>
+      <button id="tabBtnQuest" onclick="switchHudTab('quest')" class="flex-1 py-2.5 text-center text-gray-400 hover:text-cyan-200 border-b-2 border-transparent transition flex items-center justify-center space-x-1">
+        <span>2. CADET QUEST</span>
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+      </button>
+      <button id="tabBtnZapier" onclick="switchHudTab('zapier')" class="flex-1 py-2.5 text-center text-gray-400 hover:text-cyan-200 border-b-2 border-transparent transition">
+        3. ZAP PIPELINE
+      </button>
+    </div>
+
+    <!-- HUD Scrollable Content Body -->
+    <div id="hudScrollBody" class="flex-1 overflow-y-auto p-4 space-y-4 text-xs font-mono leading-relaxed">
+
+      <!-- TAB 1: BRIEFING & LORE -->
+      <div id="tabContentBriefing" class="space-y-4">
+        <!-- Planet Visualizer Mini Card -->
+        <div class="p-3.5 rounded-xl bg-black/40 border border-cyan-500/30 relative overflow-hidden">
+          <div class="text-[10px] text-cyan-400 font-bold tracking-wider uppercase mb-1">FOUNDATIONAL 2027+ HORIZON</div>
+          <p id="hudPlanetLore" class="text-gray-300 text-xs leading-normal">
+            Lore description loading from planetary core...
+          </p>
+        </div>
+
+        <!-- Tech Stack Pill Group -->
+        <div>
+          <div class="text-[11px] font-bold text-gray-300 mb-1.5 uppercase tracking-wider flex items-center">
+            <span class="text-cyan-400 mr-1.5">⚡</span> CORE TECHNOLOGICAL MATRICES (2027+)
+          </div>
+          <div id="hudTechPills" class="flex flex-wrap gap-1.5">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+
+        <!-- Career Trajectory Breakdown -->
+        <div class="p-3 rounded-xl bg-gradient-to-br from-purple-950/30 to-blue-950/20 border border-purple-500/30">
+          <div class="text-[11px] font-bold text-purple-300 mb-1 flex items-center">
+            <span class="mr-1.5">🎓</span> WHY THIS MATTERS FOR FUTURE LEADERS
+          </div>
+          <p id="hudCareerImpact" class="text-gray-300 text-[11px]">
+            Career impact details...
+          </p>
+        </div>
+
+        <!-- Action Button to Launch Quest -->
+        <button onclick="switchHudTab('quest')" class="w-full cyber-btn py-3 bg-gradient-to-r from-cyan-600 via-cyan-500 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-black font-bold font-display tracking-widest text-sm flex items-center justify-center space-x-2 shadow-[0_0_20px_rgba(0,243,255,0.4)]">
+          <span>INITIALIZE ACADEMY QUEST (+100 XP)</span>
+          <span>&rarr;</span>
+        </button>
+      </div>
+
+      <!-- TAB 2: INTERACTIVE QUEST SIMULATOR -->
+      <div id="tabContentQuest" class="hidden space-y-4">
+        <div class="p-3 rounded-lg bg-cyan-950/30 border border-cyan-400/40">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-[10px] font-bold text-cyan-300 tracking-wider">CHALLENGE PROTOCOL</span>
+            <span class="text-[10px] text-amber-300 font-mono font-bold">+100 EXP REWARD</span>
+          </div>
+          <h3 id="questTitle" class="text-sm font-bold text-white font-display">Challenge Title</h3>
+          <p id="questScenario" class="text-gray-300 text-xs mt-1.5 leading-relaxed">
+            Scenario prompt description...
+          </p>
+        </div>
+
+        <!-- Interactive Question / Multiple Choice Options -->
+        <div class="space-y-2">
+          <div class="text-[11px] text-gray-300 font-bold uppercase tracking-wider">SELECT YOUR ACTION VESTING:</div>
+          <div id="questOptionsContainer" class="space-y-2">
+            <!-- Dynamic Choice Buttons -->
+          </div>
+        </div>
+
+        <!-- AI Evaluation Terminal Box (Live Response Simulation) -->
+        <div id="questAiFeedbackBox" class="hidden p-3 rounded-xl border transition-all">
+          <div class="flex items-center space-x-2 mb-1.5">
+            <span id="aiFeedbackIcon" class="text-base">🤖</span>
+            <span id="aiFeedbackSender" class="font-bold text-xs font-display">PROFESSOR QUANTUM (OASIS AI)</span>
+          </div>
+          <p id="aiFeedbackMessage" class="text-gray-200 text-xs leading-normal">
+            Evaluating student decision matrix...
+          </p>
+        </div>
+
+        <!-- Reset or Retry button -->
+        <div class="flex justify-end">
+          <button id="resetQuestBtn" onclick="resetCurrentQuest()" class="text-[11px] text-gray-400 hover:text-cyan-300 underline">
+            Reset Challenge
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB 3: ZAPIER PIPELINE LIVE ENGINE -->
+      <div id="tabContentZapier" class="hidden space-y-3">
+        <div class="p-3 rounded-xl bg-orange-950/20 border border-[#ff4a00]/40">
+          <div class="flex items-center space-x-2">
+            <div class="w-5 h-5 rounded bg-[#ff4a00] flex items-center justify-center font-black text-black text-xs">_</div>
+            <h4 class="font-bold text-white font-display text-xs">ZAPIER AUTOMATION ARCHITECTURE</h4>
+          </div>
+          <p class="text-gray-300 text-[11px] mt-1.5">
+            In the Ashby Navis ecosystem, this interaction triggers a serverless Zap that ingests telemetry, parses student cognition style, and dispatches a personalized lesson blueprint.
+          </p>
+        </div>
+
+        <!-- Visual Flow steps -->
+        <div class="space-y-2 text-[11px]">
+          <div class="p-2.5 rounded bg-black/50 border border-gray-800 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold text-[10px]">1</span>
+              <span>Zapier Webhook Catch (Form Ingestion)</span>
+            </div>
+            <span class="text-emerald-400 font-bold">200 OK</span>
+          </div>
+
+          <div class="p-2.5 rounded bg-black/50 border border-gray-800 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center font-bold text-[10px]">2</span>
+              <span>Zapier Table: Add Record [Cadet_Progress]</span>
+            </div>
+            <span class="text-emerald-400 font-bold">SYNCED</span>
+          </div>
+
+          <div class="p-2.5 rounded bg-black/50 border border-gray-800 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="w-5 h-5 rounded-full bg-pink-500/20 text-pink-300 flex items-center justify-center font-bold text-[10px]">3</span>
+              <span>OpenAI API System: 'Professor Quantum' Synthesis</span>
+            </div>
+            <span class="text-cyan-300 font-mono">0.42s latency</span>
+          </div>
+
+          <div class="p-2.5 rounded bg-black/50 border border-gray-800 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold text-[10px]">4</span>
+              <span>Email by Zapier: Dispatch HTML Holo-Packet</span>
+            </div>
+            <span class="text-emerald-400 font-bold">DISPATCHED</span>
+          </div>
+        </div>
+
+        <!-- Live Payload Preview Box -->
+        <div>
+          <span class="text-[10px] text-gray-400 uppercase tracking-wider">LIVE TELEMETRY JSON:</span>
+          <pre id="zapierLiveJson" class="mt-1 p-2.5 rounded bg-[#030612] border border-cyan-900 text-[10px] text-cyan-300 overflow-x-auto font-mono">
+{
+  "system": "The_Student_Oasis_2027",
+  "cadet_id": "CADET-7742",
+  "selected_planet": "planet_prompt_cognition",
+  "ai_agent_tier": "gpt-5-frontier-reasoner",
+  "status": "ready"
+}
+          </pre>
+        </div>
+
+        <button onclick="triggerSimulatedZap()" class="w-full py-2.5 rounded bg-gradient-to-r from-[#ff4a00] to-amber-600 hover:brightness-110 text-white font-bold font-display text-xs tracking-wider transition shadow-[0_0_15px_rgba(255,74,0,0.4)]">
+          EXECUTE TEST WEBHOOK TRIGGER
+        </button>
+      </div>
+
+    </div>
+
+    <!-- HUD Footer Controls -->
+    <div class="p-3 border-t border-cyan-500/30 bg-[#05091a] flex items-center justify-between text-xs font-mono">
+      <span class="text-gray-400">STATUS: <span class="text-cyan-300">ORBITAL SYNCHRONIZED</span></span>
+      <button onclick="resetSolarView()" class="px-3 py-1.5 rounded border border-cyan-400/50 hover:bg-cyan-500/20 text-cyan-300 transition text-[11px]">
+        DISENGAGE ORBIT
+      </button>
+    </div>
+  </aside>
+
+  <!-- MODAL: Full Zapier Payload Inspector -->
+  <div id="zapierModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-[#091026] border-2 border-orange-500/50 rounded-2xl shadow-[0_0_50px_rgba(255,74,0,0.3)] overflow-hidden flex flex-col max-h-[85vh]">
+      <div class="p-4 border-b border-orange-500/30 bg-orange-950/40 flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="text-xl">⚡</span>
+          <div>
+            <h3 class="font-bold text-white font-display text-base">ZAPIER & PROFESSOR QUANTUM PIPELINE TELEMETRY</h3>
+            <p class="text-[10px] text-orange-300 font-mono">AUTOMATED MULTI-STAGE REASONING PIPELINE (2027 EDITION)</p>
+          </div>
+        </div>
+        <button onclick="closeZapierInspector()" class="text-gray-400 hover:text-white text-xl">✕</button>
+      </div>
+      <div class="p-4 overflow-y-auto space-y-3 font-mono text-xs">
+        <p class="text-gray-300">
+          Every educational action within the Oasis is instrumented. Rather than a static LMS, the backend orchestrator utilizes Zapier to trigger dynamic LLM cognitive synthesis:
+        </p>
+        <div class="p-3 bg-black/60 rounded-lg border border-cyan-500/30 space-y-1 text-cyan-200 text-[11px]">
+          <div><strong>Webhook Target:</strong> <code class="text-yellow-300">https://hooks.zapier.com/hooks/catch/652b22/oasis-2027/</code></div>
+          <div><strong>Table Storage:</strong> <code class="text-yellow-300">Zapier Tables &rarr; [Oasis_Cadet_Ledger_2027]</code></div>
+          <div><strong>AI Reasoning Prompt:</strong> <code class="text-yellow-300">"You are Professor Quantum, Dean of the 2027 Student Oasis..."</code></div>
+          <div><strong>Latency SLA:</strong> <code class="text-emerald-400">&lt; 1,200ms round-trip delivery</code></div>
+        </div>
+        <div>
+          <span class="text-gray-400 text-[10px]">CURRENT PIPELINE SESSION DUMP:</span>
+          <pre id="modalJsonDump" class="p-3 bg-black rounded-lg border border-gray-800 text-emerald-400 text-[11px] overflow-x-auto">
+{
+  "project": "Ashby Navis & Tennyson Oasis",
+  "engine": "Zapier Orchestrator 2027",
+  "active_agent": "Professor Quantum v3.4",
+  "cadet_progress": {
+    "total_xp": 150,
+    "completed_planets": ["prompt_cognition"]
+  }
+}
+          </pre>
+        </div>
+      </div>
+      <div class="p-3 border-t border-gray-800 bg-[#060a1a] flex justify-end">
+        <button onclick="closeZapierInspector()" class="px-4 py-1.5 rounded bg-cyan-600 hover:bg-cyan-500 text-black font-bold font-display text-xs">
+          CLOSE TELEMETRY
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING BOTTOM LEFT: Mini Map & System Legend -->
+  <div class="hidden lg:block absolute bottom-16 left-4 z-20 pointer-events-auto bg-[#070d1eec] border border-cyan-500/30 rounded-xl p-3 w-64 backdrop-blur-md shadow-xl text-xs font-mono">
+    <div class="text-[10px] text-cyan-400 font-bold uppercase tracking-wider mb-2 flex items-center justify-between">
+      <span>COGNITIVE MATRIX (2027+)</span>
+      <span class="text-gray-400">6 SECTORS</span>
+    </div>
+    <div class="space-y-1.5 text-[11px]">
+      <div class="flex items-center space-x-2 cursor-pointer hover:text-cyan-300" onclick="zoomToPlanetById('prompt')">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#00f3ff]"></span>
+        <span class="truncate">Planet Prompt &amp; Cognition</span>
+      </div>
+      <div class="flex items-center space-x-2 cursor-pointer hover:text-purple-300" onclick="zoomToPlanetById('quantum')">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#b5179e]"></span>
+        <span class="truncate">Planet Quantum Horizons</span>
+      </div>
+      <div class="flex items-center space-x-2 cursor-pointer hover:text-emerald-300" onclick="zoomToPlanetById('synbio')">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#00ffa3]"></span>
+        <span class="truncate">Planet Synthetic Biology</span>
+      </div>
+      <div class="flex items-center space-x-2 cursor-pointer hover:text-pink-300" onclick="zoomToPlanetById('neural')">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#ff007f]"></span>
+        <span class="truncate">Planet Neural Interfaces</span>
+      </div>
+      <div class="flex items-center space-x-2 cursor-pointer hover:text-amber-300" onclick="zoomToPlanetById('fusion')">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#ffaa00]"></span>
+        <span class="truncate">Planet Fusion &amp; Metamaterials</span>
+      </div>
+      <div class="flex items-center space-x-2 cursor-pointer hover:text-blue-300" onclick="zoomToPlanetById('robotics')">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#3a86ff]"></span>
+        <span class="truncate">Planet Autonomous Robotics</span>
+      </div>
+    </div>
+    <div class="mt-2.5 pt-2 border-t border-cyan-900/60 text-[10px] text-gray-400">
+      Click any celestial orb to initiate orbital lock.
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT APPLICATION CORE -->
+  <script>
+    /* =========================================================================
+       1. DATA ARCHITECTURE: 2027+ FRONTIER PLANETS & QUESTS
+       ========================================================================= */
+    const OASIS_PLANETS = [
+      {
+        id: "prompt",
+        name: "Planet Prompt & Cognition",
+        shortName: "Prompt & Cognition",
+        subtitle: "Latent Space Architecture & Agent Swarms",
+        career: "Latent Space Architect & Swarm Synthesizer",
+        color: "#00f3ff",
+        secondaryColor: "#0066aa",
+        radius: 26,
+        orbitDistance: 130,
+        orbitSpeed: 0.007,
+        angle: 0.4,
+        ring: false,
+        lore: "In 2027, software engineering has evolved beyond hand-written syntax into Latent Space Orchestration. On this planet, cadets construct multi-agent reasoning graphs, calibrate neural weights, and govern autonomous AI collectives that co-author scientific breakthroughs.",
+        techPills: ["Agent Swarms", "Latent Space Routing", "Zero-Shot Formal Proofs", "Prompt Topologies", "Cognitive Safeguards"],
+        careerImpact: "Prepares students to architect autonomous agent economies and orchestrate foundation models across enterprise industries.",
+        quest: {
+          title: "The Emergent Reasoning Swarm Dilemma",
+          scenario: "A cluster of 12 autonomous medical triage AI agents is experiencing a circular verification loop in latent space, freezing diagnostic recommendations for an orbital habitat. As Latent Space Architect, what is your intervention?",
+          options: [
+            {
+              text: "Inject a thermodynamic entropy perturbation into the lead mediator agent's attention heads to break the deadlock.",
+              correct: true,
+              feedback: "Brilliant calibration! Introducing controlled stochastic variance disrupts cyclic self-attention attractors, restoring divergent reasoning pathways. Zapier Table updated (+100 XP)."
+            },
+            {
+              text: "Hardcode 500 static if-then rules directly into the primary prompt context window.",
+              correct: false,
+              feedback: "Ineffective! In 2027, brute-force static rules cause catastrophic context crowding and hallucinatory degradation in agent swarms. Try again!"
+            },
+            {
+              text: "Power cycle all 12 agents simultaneously and revert to a 2022 single-shot LLM prompt.",
+              correct: false,
+              feedback: "Failure: Reverting to obsolete single-shot architectures strips the diagnostic pipeline of multi-perspective verification. The loop persists."
+            }
+          ]
+        }
+      },
+      {
+        id: "quantum",
+        name: "Planet Quantum Horizons",
+        shortName: "Quantum Horizons",
+        subtitle: "Qubits, Superposition & Cryptography",
+        career: "Quantum Algorithmic Cryptographer",
+        color: "#b5179e",
+        secondaryColor: "#7209b7",
+        radius: 28,
+        orbitDistance: 195,
+        orbitSpeed: 0.0052,
+        angle: 1.8,
+        ring: true,
+        ringRadius: 42,
+        lore: "Anchored in macroscopic coherence, Planet Quantum Horizons trains cadets in non-binary computational paradigms. Here, anyonic braiding and Shor-2027 resistance protocols replace classical bits with resilient topological entanglement.",
+        techPills: ["Topological Anyons", "Quantum Key Distribution", "Shor Resistance", "Coherence Stabilizers", "Quantum Sensing"],
+        careerImpact: "Frontier quantum systems protect global satellite networks, design zero-loss power grids, and simulate molecular catalysts at atom-for-atom fidelity.",
+        quest: {
+          title: "Anyonic Braiding Stabilization",
+          scenario: "A thermal fluctuation in a cryogenic dilution refrigerator threatens to collapse a 1,024-qubit topological register during a post-quantum crypto handshake. How do you maintain phase coherence?",
+          options: [
+            {
+              text: "Reroute the qubit parity checks through non-Abelian anyon braids on the surface code perimeter.",
+              correct: true,
+              feedback: "Superb quantum maneuvering! Topological anyon braids isolate state information non-locally, rendering the register immune to localized thermal decoherence! (+100 XP)"
+            },
+            {
+              text: "Increase ambient microwave power to warm up the dilution chamber to room temperature.",
+              correct: false,
+              feedback: "Critical decoherence! Increasing thermal energy instantly destroys quantum superposition states. The system collapses to classical noise."
+            },
+            {
+              text: "Copy the quantum wave function onto a USB drive to preserve it.",
+              correct: false,
+              feedback: "Physical impossibility: The No-Cloning Theorem dictates that an arbitrary unknown quantum state cannot be replicated."
+            }
+          ]
+        }
+      },
+      {
+        id: "synbio",
+        name: "Planet Synthetic Biology",
+        shortName: "Synthetic Biology",
+        subtitle: "CRISPR-7.0, DNA Storage & Living Systems",
+        career: "Genetic Circuit Programmer & Biomaterial Engineer",
+        color: "#00ffa3",
+        secondaryColor: "#057a55",
+        radius: 24,
+        orbitDistance: 260,
+        orbitSpeed: 0.0041,
+        angle: 3.2,
+        ring: false,
+        lore: "On Planet Synthetic Biology, cellular biology is the premier programming language. Students synthesize living carbon-negative polymers, program bacterial logic gates, and architect petabyte-scale molecular DNA archival chips.",
+        techPills: ["Epigenetic Editing", "DNA Exabyte Drives", "Cell-Free Bio-Foundries", "Organoid Neural Tissue", "Bacterial Logic Gates
