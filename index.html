@@ -28,7 +28,6 @@
       padding-bottom: 60px;
     }
 
-    /* Top Command Header */
     header {
       background: #0d121c;
       border-bottom: 1px solid var(--border);
@@ -58,10 +57,9 @@
     }
     .status-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; box-shadow: 0 0 8px var(--green); }
 
-    /* Container */
     .container { max-width: 1300px; margin: 0 auto; padding: 1.5rem; }
 
-    /* Mission Quick Launchpad */
+    /* Mission Library & Launchpad */
     .launchpad {
       background: linear-gradient(180deg, #131b2a 0%, #0d131e 100%);
       border: 1px solid #233149;
@@ -70,72 +68,113 @@
       margin-bottom: 2rem;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
+    .launchpad-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
     .launchpad-title {
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: #fff;
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      margin-bottom: 1rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
-    .launchpad-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.25rem;
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
     }
-    .launchpad-card {
+    .filter-chip {
+      background: #172033;
+      border: 1px solid #2d3b55;
+      color: var(--text-muted);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      transition: all 0.2s;
+    }
+    .filter-chip:hover, .filter-chip.active {
+      background: var(--cyan);
+      color: #000;
+      font-weight: 600;
+      border-color: var(--cyan);
+    }
+
+    /* Lesson Grid */
+    .mission-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1rem;
+    }
+    .mission-card {
       background: #0d121c;
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 1rem;
-    }
-    .launchpad-card h3 {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .button-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .jump-btn {
-      background: #172033;
-      border: 1px solid #2d3b55;
-      color: #fff;
-      padding: 0.6rem 0.85rem;
-      border-radius: 6px;
-      font-size: 0.85rem;
       cursor: pointer;
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: space-between;
       transition: all 0.2s ease;
-      text-align: left;
     }
-    .jump-btn:hover {
-      background: #1e2c47;
+    .mission-card:hover {
       border-color: var(--cyan);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 229, 255, 0.15);
     }
-    .jump-btn span.tag {
+    .mission-card-top { margin-bottom: 0.75rem; }
+    .mission-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .mission-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.3;
+      margin-bottom: 0.35rem;
+    }
+    .mission-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .mission-cta {
+      margin-top: 0.75rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid #1a2233;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--cyan);
+    }
+
+    .tag {
       font-size: 0.65rem;
       padding: 2px 6px;
       border-radius: 4px;
       font-family: var(--font-mono);
+      font-weight: 600;
+      display: inline-block;
     }
     .tag-stem { background: rgba(0, 229, 255, 0.15); color: var(--cyan); border: 1px solid rgba(0, 229, 255, 0.4); }
     .tag-hum { background: rgba(255, 179, 0, 0.15); color: var(--amber); border: 1px solid rgba(255, 179, 0, 0.4); }
     .tag-art { background: rgba(217, 70, 239, 0.15); color: var(--purple); border: 1px solid rgba(217, 70, 239, 0.4); }
 
-    /* Main Grid: Orrery & Holo-Lab Form */
+    /* Main Command Row */
     .grid-main {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -164,7 +203,6 @@
     }
     .panel-header h2 { font-size: 1rem; font-weight: 600; color: #fff; }
 
-    /* Canvas Orrery */
     #orreryCanvas {
       width: 100%;
       height: 340px;
@@ -225,7 +263,7 @@
     }
     .btn-warp:hover { opacity: 0.9; }
 
-    /* Blueprint Terminal Output */
+    /* Tactical Output Display */
     #blueprintOutput {
       margin-top: 2rem;
       background: #0d121a;
@@ -241,115 +279,82 @@
       margin-bottom: 1rem;
       border-bottom: 1px solid #1f2c42;
       padding-bottom: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
     .blueprint-content {
       background: #070a0f;
-      padding: 1.25rem;
+      padding: 1.5rem;
       border-radius: 8px;
       border: 1px solid #1a2230;
       font-family: var(--font-sans);
+    }
+    .module-box {
+      background: #0c111a;
+      border: 1px solid #192436;
+      border-radius: 6px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .module-box h4 {
+      color: var(--cyan);
+      font-size: 0.88rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Header -->
   <header>
     <div class="brand">
       <div class="brand-icon">🪐</div>
       <div>
         <h1>THE ASHBY TERMINAL</h1>
-        <span>ASHBY NAVIS & TENNYSON • METAVERSE GUI</span>
+        <span>ASHBY NAVIS & TENNYSON • PEDAGOGICAL METAVERSE</span>
       </div>
     </div>
     <div class="status-badge">
       <div class="status-dot"></div>
-      ZAPIER ENGINES ONLINE
+      ALL 8 PLANETARY SECTORS READY
     </div>
   </header>
 
   <div class="container">
 
-    <!-- Mission Launchpad: Quick Planet Jumps & One-Click Lessons -->
+    <!-- Mission Library (Filterable Drawer) -->
     <div class="launchpad">
-      <div class="launchpad-title">🚀 Fast Mission Launchpad (Pick a Planet or Instant Lesson)</div>
-      
-      <div class="launchpad-grid">
-        
-        <!-- Science Planets -->
-        <div class="launchpad-card">
-          <h3>🔬 Science Planets <span class="tag tag-stem">STEM</span></h3>
-          <div class="button-stack">
-            <button class="jump-btn" onclick="selectPlanet('Planet Quantum', 'STEM', '#00e5ff', 'Physics & Advanced Sciences')">
-              <span>⚛️ Planet Quantum</span>
-              <span class="tag tag-stem">Physics</span>
-            </button>
-            <button class="jump-btn" onclick="selectPlanet('Planet Bio-Sphere', 'STEM', '#00e5ff', 'Life & Ecosystem Models')">
-              <span>🌿 Planet Bio-Sphere</span>
-              <span class="tag tag-stem">Biology</span>
-            </button>
-            <button class="jump-btn" onclick="selectPlanet('Planet Math-Prime', 'STEM', '#00e5ff', 'Pure & Applied Computation')">
-              <span>📐 Planet Math-Prime</span>
-              <span class="tag tag-stem">Math</span>
-            </button>
-          </div>
+      <div class="launchpad-header">
+        <div class="launchpad-title">⚡ Sovereign Curriculum Library (12 Tactical Missions)</div>
+        <div class="filter-bar">
+          <button class="filter-chip active" onclick="filterMissions('ALL', this)">ALL MISSIONS</button>
+          <button class="filter-chip" onclick="filterMissions('STEM', this)">🔬 STEM SECTOR</button>
+          <button class="filter-chip" onclick="filterMissions('HUMANITIES', this)">📜 HUMANITIES</button>
+          <button class="filter-chip" onclick="filterMissions('ARTSANDLIFE', this)">🎨 ARTS & LIFE</button>
         </div>
-
-        <!-- Humanities & Story Planets -->
-        <div class="launchpad-card">
-          <h3>📜 Humanities & Story <span class="tag tag-hum">HUM</span></h3>
-          <div class="button-stack">
-            <button class="jump-btn" onclick="selectPlanet('Planet History', 'HUMANITIES', '#ffb300', 'Historical Investigation & Primary Sources')">
-              <span>🏛️ Planet History</span>
-              <span class="tag tag-hum">History</span>
-            </button>
-            <button class="jump-btn" onclick="selectPlanet('Planet Literature', 'HUMANITIES', '#ffb300', 'Rhetoric & Story Architecture')">
-              <span>📖 Planet Literature</span>
-              <span class="tag tag-hum">Literature</span>
-            </button>
-            <button class="jump-btn" onclick="selectPlanet('Planet Civics', 'HUMANITIES', '#ffb300', 'Governance & Ethical Systems')">
-              <span>⚖️ Planet Civics</span>
-              <span class="tag tag-hum">Civics</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- One-Click Instant Lessons -->
-        <div class="launchpad-card">
-          <h3>⚡ Quick-Pick Missions <span class="tag" style="background:#334155; color:#fff">PRESETS</span></h3>
-          <div class="button-stack">
-            <button class="jump-btn" onclick="loadLessonPreset('coin')">
-              <span>🪙 Quantum Coin Flip</span>
-              <span class="tag tag-stem">6-8 Lab</span>
-            </button>
-            <button class="jump-btn" onclick="loadLessonPreset('senate')">
-              <span>🏛️ Roman Senate Debate</span>
-              <span class="tag tag-hum">9-12 Civics</span>
-            </button>
-            <button class="jump-btn" onclick="loadLessonPreset('fractal')">
-              <span>🎨 Nature's Fractals</span>
-              <span class="tag tag-art">Design/Math</span>
-            </button>
-          </div>
-        </div>
-
       </div>
+
+      <div class="mission-grid" id="missionGridContainer"></div>
     </div>
 
-    <!-- Main Grid: 3D Orrery + Foundry Form -->
+    <!-- Main Command Console: Canvas Orrery & Holo-Lab Form -->
     <div class="grid-main">
       
-      <!-- Interactive Orrery -->
+      <!-- Interactive Orrery Radar -->
       <div class="panel">
         <div class="panel-header">
-          <h2>Planetary Radar & Sectors</h2>
-          <span style="font-size:0.75rem; color:var(--text-muted)">CLICK ORBIT TO TARGET</span>
+          <h2>Planetary Radar & Orbital Vectors</h2>
+          <span style="font-size:0.75rem; color:var(--text-muted)">TARGET ACQUIRED</span>
         </div>
         <canvas id="orreryCanvas" width="550" height="340"></canvas>
         <div class="active-planet-info" id="planetTelemetry">
           <strong>TARGET:</strong> <span id="telemetryName" style="color:var(--cyan)">Planet Quantum</span> | 
           <span id="telemetrySector">STEM SECTOR</span> — 
-          <span id="telemetryDesc" style="color:var(--text-muted)">Physics & Advanced Sciences</span>
+          <span id="telemetryDesc" style="color:var(--text-muted)">Physics & Advanced Mechanics</span>
         </div>
       </div>
 
@@ -359,10 +364,10 @@
           <h2>Holo-Lab Blueprint Generator</h2>
           <span style="font-size:0.75rem; color:var(--cyan)">ENGINE 1</span>
         </div>
-        <form id="foundryForm" onsubmit="generateBlueprint(event)">
+        <form id="foundryForm" onsubmit="generateCustomBlueprint(event)">
           <div class="form-group">
-            <label>Educator Name or Call Sign</label>
-            <input type="text" id="eduName" value="Professor Quantum" required>
+            <label>Educator Call Sign / Name</label>
+            <input type="text" id="eduName" value="Commander Ivy" required>
           </div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem">
             <div class="form-group">
@@ -389,21 +394,22 @@
             </div>
           </div>
           <div class="form-group">
-            <label>Lesson Topic / Scientific Challenge</label>
-            <input type="text" id="topicInput" value="Investigating Superposition & Probability States" required>
+            <label>Inquiry Topic or Empirical Paradox</label>
+            <input type="text" id="topicInput" value="Investigating Static Friction Coefficients using Timber Sleds" required>
           </div>
-          <button type="submit" class="btn-warp">⚡ Engage Warp Jump & Generate Blueprint</button>
+          <button type="submit" class="btn-warp">⚡ Engage Warp Jump & Compile Blueprint</button>
         </form>
       </div>
 
     </div>
 
-    <!-- Output Blueprint Box -->
+    <!-- 6-Module Tactical Blueprint Output -->
     <div id="blueprintOutput">
       <div class="blueprint-header">
-        <h2 style="font-size:1.1rem; color:var(--cyan)">📋 6-Module Tactical Blueprint Generated</h2>
-        <div>
-          <button class="jump-btn" onclick="copyBlueprint()" style="display:inline-block; padding:4px 8px;">📋 Copy HTML</button>
+        <h2 style="font-size:1.1rem; color:var(--cyan)">📋 6-Module Tactical Mission Blueprint</h2>
+        <div style="display:flex; gap:0.5rem">
+          <button class="filter-chip" onclick="copyBlueprint()">📋 Copy Text</button>
+          <button class="filter-chip" onclick="window.print()">🖨️ Print Mission</button>
         </div>
       </div>
       <div class="blueprint-content" id="blueprintRender"></div>
@@ -412,21 +418,472 @@
   </div>
 
   <script>
-    // Planets Configuration
+    // 1. Master Planets Array
     const planets = [
-      { name: 'Planet Quantum', sector: 'STEM', radius: 45, speed: 0.02, color: '#00e5ff', desc: 'Physics & Advanced Sciences' },
-      { name: 'Planet Bio-Sphere', sector: 'STEM', radius: 70, speed: 0.015, color: '#00e5ff', desc: 'Life & Ecosystem Models' },
-      { name: 'Planet Math-Prime', sector: 'STEM', radius: 95, speed: 0.011, color: '#00e5ff', desc: 'Pure & Applied Computation' },
-      { name: 'Planet History', sector: 'HUMANITIES', radius: 120, speed: 0.009, color: '#ffb300', desc: 'Historical Investigation' },
+      { name: 'Planet Quantum', sector: 'STEM', radius: 45, speed: 0.02, color: '#00e5ff', desc: 'Physics & Advanced Mechanics' },
+      { name: 'Planet Bio-Sphere', sector: 'STEM', radius: 70, speed: 0.015, color: '#00e5ff', desc: 'Cellular Systems & Biomes' },
+      { name: 'Planet Math-Prime', sector: 'STEM', radius: 95, speed: 0.011, color: '#00e5ff', desc: 'Pure Geometry & Applied Logic' },
+      { name: 'Planet History', sector: 'HUMANITIES', radius: 120, speed: 0.009, color: '#ffb300', desc: 'Primary Source Interrogation' },
       { name: 'Planet Literature', sector: 'HUMANITIES', radius: 145, speed: 0.007, color: '#ffb300', desc: 'Rhetoric & Story Architecture' },
-      { name: 'Planet Civics', sector: 'HUMANITIES', radius: 170, speed: 0.0055, color: '#ffb300', desc: 'Governance & Ethics' },
-      { name: 'Planet Studio', sector: 'ARTSANDLIFE', radius: 195, speed: 0.004, color: '#d946ef', desc: 'Visual & Sonic Design' },
-      { name: 'Planet Wellness', sector: 'ARTSANDLIFE', radius: 220, speed: 0.003, color: '#d946ef', desc: 'Physiology & Mental Fortitude' }
+      { name: 'Planet Civics', sector: 'HUMANITIES', radius: 170, speed: 0.0055, color: '#ffb300', desc: 'Jurisprudence & Ethics' },
+      { name: 'Planet Studio', sector: 'ARTSANDLIFE', radius: 195, speed: 0.004, color: '#d946ef', desc: 'Spatial Design & Visual Acoustics' },
+      { name: 'Planet Wellness', sector: 'ARTSANDLIFE', radius: 220, speed: 0.003, color: '#d946ef', desc: 'Physiological Sovereignty' }
     ];
 
     let currentPlanet = planets[0];
 
-    // Canvas Orrery Animation
+    // 2. Comprehensive 12-Lesson Library Database
+    const lessonLibrary = [
+      // STEM Sector (4 Lessons)
+      {
+        id: 'quantum-coin',
+        title: 'Quantum Coin Superposition',
+        planet: 'Planet Quantum',
+        sector: 'STEM',
+        grade: 'Middle School (6-8)',
+        tagText: 'Physics / Prob',
+        tagClass: 'tag-stem',
+        synopsis: 'Explore quantum states and probability collapse using multi-trial calibrated physical coin flips.',
+        standard: 'NGSS MS-PS4-3 & CCSS.MATH.CONTENT.7.SP.C.5',
+        apparatus: '20 calibrated metal tokens, landing troughs, digital stopwatch, angle ruler.',
+        labPhases: [
+          'Phase A (Setup): Establish a clean baseline of 50 vertical thumb-flicks onto rubber foam.',
+          'Phase B (Execution): Introduce an acoustic barrier and test blind collapse state probability over 100 trials.',
+          'Phase C (Synthesis): Plot variance against theoretical 50/50 distribution in the Agora log.'
+        ],
+        explorer: 'Record raw counts with pre-formatted tally tables and simple pie charts.',
+        navigator: 'Calculate standard deviation and percentage variance from the expected mean.',
+        commander: 'Compute chi-square goodness-of-fit to determine if coin wear introduces systematic bias.',
+        rubric: 'Mastery: Complete tabular dataset with calculated variance and articulate defense of random distribution.',
+        exitTicket: 'Why does increasing the number of trials from 10 to 1000 make our model look more classical and less random?'
+      },
+      {
+        id: 'wave-particle',
+        title: 'Laser Fringe Wave-Particle Lab',
+        planet: 'Planet Quantum',
+        sector: 'STEM',
+        grade: 'High School (9-12)',
+        tagText: 'Optics / NGSS',
+        tagClass: 'tag-stem',
+        synopsis: 'Investigate Young\'s double-slit interference patterns with red laser diodes and hair filaments.',
+        standard: 'NGSS HS-PS4-3 (Electromagnetic Radiation & Wave-Particle Duality)',
+        apparatus: '650nm Class II laser pointer, glass slide with twin slit carbon film, millimeter wall grid, calipers.',
+        labPhases: [
+          'Phase A (Setup): Align optical emitter 5 meters from projection surface in darkened room.',
+          'Phase B (Execution): Measure distance between consecutive bright interference fringes (Δy).',
+          'Phase C (Synthesis): Calculate exact wavelength (λ) of the beam using λ = (y * d) / L.'
+        ],
+        explorer: 'Count fringe bands and verify whether light spreads out or travels straight.',
+        navigator: 'Calculate wavelength using single trial and compare to manufacturer 650nm rating.',
+        commander: 'Propagate measurement uncertainty across slit distance and projection geometry.',
+        rubric: 'Mastery: Accurate calculation of beam wavelength within 8% error margin with full uncertainty analysis.',
+        exitTicket: 'If light were solely composed of rigid macroscopic particles, what pattern would appear on the screen?'
+      },
+      {
+        id: 'terrarium-biome',
+        title: 'Closed Biome Equilibrium',
+        planet: 'Planet Bio-Sphere',
+        sector: 'STEM',
+        grade: 'Middle School (6-8)',
+        tagText: 'Ecology / Bio',
+        tagClass: 'tag-stem',
+        synopsis: 'Assemble sealed micro-ecosystems to track carbon and water cycling under varying light intensity.',
+        standard: 'NGSS MS-LS2-3 & MS-LS2-5 (Ecosystem Dynamics & Cycling of Matter)',
+        apparatus: '1-liter sealed glass mason jars, activated charcoal, pea gravel, sphagnum moss, Fittonia seedlings.',
+        labPhases: [
+          'Phase A (Setup): Layer substrate to prevent root rot and establish initial water mass balance.',
+          'Phase B (Execution): Seal lid hermetically and subject to 12-hour photoperiod cycles over 14 days.',
+          'Phase C (Synthesis): Evaluate condensation patterns and biomass health metrics.'
+        ],
+        explorer: 'Track daily water droplet density and leaf coloration on a qualitative scale.',
+        navigator: 'Graph condensation cycles versus room temperature changes.',
+        commander: 'Model the theoretical stoichiometric ratio of oxygen to carbon dioxide turnover in the sealed jar.',
+        rubric: 'Mastery: Maintenance of moisture equilibrium with no fungal blooms and fully justified gas-cycle diagram.',
+        exitTicket: 'What element in the jar acts as the primary carbon sink once external air is cut off?'
+      },
+      {
+        id: 'fractal-geometry',
+        title: 'Chaos & Sierpiński Triangles',
+        planet: 'Planet Math-Prime',
+        sector: 'STEM',
+        grade: 'High School (9-12)',
+        tagText: 'Math / Chaos',
+        tagClass: 'tag-stem',
+        synopsis: 'Generate recursive geometric fractals by hand and compute fractional Hausdorff dimensions.',
+        standard: 'CCSS.MATH.CONTENT.HSG.MG.A.1 & HSF.BF.A.2 (Geometric Modeling & Recursion)',
+        apparatus: 'Isometric dot paper, fine-tip pigment pens, metric drafting rulers, 6-sided dice.',
+        labPhases: [
+          'Phase A (Setup): Plot three equilateral vertices on isometric plane; select starting point.',
+          'Phase B (Execution): Roll die to jump halfway to vertex; repeat 250 times to reveal emergent order.',
+          'Phase C (Synthesis): Derive log(3)/log(2) dimension mathematically.'
+        ],
+        explorer: 'Complete 3 iterations of Sierpiński triangles and calculate perimeter growth.',
+        navigator: 'Plot perimeter explosion versus area contraction across 6 recursive steps.',
+        commander: 'Formulate the Hausdorff dimension equation and prove how dimension exceeds 1 yet is less than 2.',
+        rubric: 'Mastery: Flawless construction of iteration 4 with analytical proof of infinite perimeter and zero area.',
+        exitTicket: 'How can a geometric object have infinite boundary length yet occupy a bounded area?'
+      },
+
+      // Humanities Sector (4 Lessons)
+      {
+        id: 'gracchi-senate',
+        title: 'The Roman Agrarian Senate Crisis',
+        planet: 'Planet Civics',
+        sector: 'HUMANITIES',
+        grade: 'High School (9-12)',
+        tagText: 'Civics / Rome',
+        tagClass: 'tag-hum',
+        synopsis: 'Simulate the turbulent 133 BCE assembly debates surrounding Tiberius Gracchus and public land redistribution.',
+        standard: 'C3 Framework D2.Civ.2.9-12 & CCSS.ELA-LITERACY.RH.11-12.1',
+        apparatus: 'Primary source excerpts (Plutarch\'s Life of Tiberius Gracchus, Appian), rostrum lectern, vote tokens.',
+        labPhases: [
+          'Phase A (Setup): Assign patrician senatorial factions vs. plebeian assembly representatives.',
+          'Phase B (Execution): Deliver formal 2-minute latin-modeled speeches on the lex Sempronia agraria.',
+          'Phase C (Synthesis): Vote on redistribution and evaluate the constitutional legality of vetoing fellow tribunes.'
+        ],
+        explorer: 'Analyze primary text to identify the basic economic grievances of displaced Italian farmers.',
+        navigator: 'Deliver structured rebuttal balancing Roman mos maiorum against emergency plebeian decrees.',
+        commander: 'Synthesize how the circumvention of senatorial precedent directly paved the path to civil war.',
+        rubric: 'Mastery: Persuasive oratory citing historical statute with nuanced defense of constitutional precedent.',
+        exitTicket: 'When institutional norms conflict with acute economic crisis, which must yield to preserve the republic?'
+      },
+      {
+        id: 'primary-source-salem',
+        title: 'Salem Witchcraft Depositions (1692)',
+        planet: 'Planet History',
+        sector: 'HUMANITIES',
+        grade: 'Middle School (6-8)',
+        tagText: 'History / Law',
+        tagClass: 'tag-hum',
+        synopsis: 'Cross-examine legal depositions from 1692 to diagnose spectral evidence and collective hysteria.',
+        standard: 'C3 Framework D2.His.10.6-8 & CCSS.ELA-LITERACY.RH.6-8.2',
+        apparatus: 'Court transcripts from the Salem Witch Trials Document Archive, judicial bias rubrics.',
+        labPhases: [
+          'Phase A (Setup): Transcribe handwritten deposition extracts into plain forensic claims.',
+          'Phase B (Execution): Map interpersonal land disputes between the Putnam and Porter families against accused names.',
+          'Phase C (Synthesis): Trace the legal failure of admitting "spectral evidence" in colonial magistrates.'
+        ],
+        explorer: 'Highlight instances of hearsay versus tangible evidence in the original interrogation papers.',
+        navigator: 'Overlay geographical property boundary maps onto the list of initial accusers and defendants.',
+        commander: 'Formulate an essay arguing how the suspension of habeas corpus transforms courtrooms into panic engines.',
+        rubric: 'Mastery: Evidence-based correlation between socioeconomic stress and judicial misconduct in colonial Essex County.',
+        exitTicket: 'Why did the British governor ban spectral evidence only after prominent societal figures were targeted?'
+      },
+      {
+        id: 'rhetorical-antigone',
+        title: 'Sophocles\' Antigone: Duty vs. State',
+        planet: 'Planet Literature',
+        sector: 'HUMANITIES',
+        grade: 'High School (9-12)',
+        tagText: 'Rhetoric / Drama',
+        tagClass: 'tag-hum',
+        synopsis: 'Deconstruct Creon\'s decree and Antigone\'s unwritten laws using classical Aristotelian rhetorical appeals.',
+        standard: 'CCSS.ELA-LITERACY.RL.11-12.3 & CCSS.ELA-LITERACY.W.11-12.1',
+        apparatus: 'Dual translation copies of Scene 2 (Fagles vs. Wyckoff), rhetorical claim triage cards.',
+        labPhases: [
+          'Phase A (Setup): Catalog each line of Creon\'s speech into Logos (civic order) vs. Pathos (fear of rebellion).',
+          'Phase B (Execution): Stage a mock appellate hearing assessing if natural law supersedes statutory decree.',
+          'Phase C (Synthesis): Construct a modern parallel brief defending civil disobedience.'
+        ],
+        explorer: 'Identify the exact metaphorical language Creon uses to describe the state as a ship at sea.',
+        navigator: 'Evaluate whether Creon or Antigone demonstrates greater hamartia (tragic flaw) in Scene 2.',
+        commander: 'Write a judicial opinion reconciling divine obligation against sovereign civic survival.',
+        rubric: 'Mastery: Rigorous textual citation with advanced dissection of Ethos, Pathos, and Logos in tragic dialogue.',
+        exitTicket: 'Can an action be legally tyrannical yet politically necessary for preserving public safety?'
+      },
+      {
+        id: 'code-hammurabi',
+        title: 'Hammurabi: Eye for an Eye Jurisprudence',
+        planet: 'Planet Civics',
+        sector: 'HUMANITIES',
+        grade: 'Elementary (3-5)',
+        tagText: 'Civics / Ethics',
+        tagClass: 'tag-hum',
+        synopsis: 'Examine ancient Mesopotamian law steles to understand proportional justice and fairness.',
+        standard: 'C3 Framework D2.Civ.3.3-5 (Rules and Laws in Ancient Society)',
+        apparatus: 'Clay slab simulation tablets, stylus wooden sticks, picture translations of 10 Babylonian laws.',
+        labPhases: [
+          'Phase A (Setup): Read three laws concerning lost oxen, builders, and field irrigation.',
+          'Phase B (Execution): Act out a marketplace dispute and propose fair settlements without violence.',
+          'Phase C (Synthesis): Compare Babylonian written laws to our modern classroom constitution.'
+        ],
+        explorer: 'Draw the before and after story of a builder who failed to build a sturdy home.',
+        navigator: 'Explain why putting laws in stone was a major improvement over kings changing rules arbitrarily.',
+        commander: 'Critique the class distinctions in the code: why fines differed between nobles and common laborers.',
+        rubric: 'Mastery: Clear explanation of why equal rules protect everyone, supported by stone code examples.',
+        exitTicket: 'Why is it better for laws to be written down on stone than kept secret in someone’s head?'
+      },
+
+      // Arts & Life Sector (4 Lessons)
+      {
+        id: 'golden-ratio',
+        title: 'The Golden Spiral in Architectural Design',
+        planet: 'Planet Studio',
+        sector: 'ARTSANDLIFE',
+        grade: 'Middle School (6-8)',
+        tagText: 'Design / Phi',
+        tagClass: 'tag-art',
+        synopsis: 'Construct logarithmic Fibonacci spirals and apply proportional grids to modular building facades.',
+        standard: 'National Core Arts Standards: VA:Cr1.1.8a & CCSS.MATH.CONTENT.7.G.B.6',
+        apparatus: 'Drafting compass, engineering grid paper, mechanical pencils, Parthenon elevation diagrams.',
+        labPhases: [
+          'Phase A (Setup): Draw successive squares with dimensions 1, 1, 2, 3, 5, 8, and 13.',
+          'Phase B (Execution): Swing continuous arcs through square corners to form the golden spiral.',
+          'Phase C (Synthesis): Overlay golden ratios onto modern smartphone design and classical temples.'
+        ],
+        explorer: 'Accurately render the first 6 Fibonacci squares and connect their diagonal arcs.',
+        navigator: 'Calculate the ratio between successive terms (e.g., 13/8, 21/13) to approximate Phi (1.618).',
+        commander: 'Draft an original architectural pavilion where window openings strictly conform to Phi ratios.',
+        rubric: 'Mastery: Geometrically precise spiral with analytical calculation of Phi convergence.',
+        exitTicket: 'Why does human visual perception instinctively find the 1:1.618 ratio balanced and pleasing?'
+      },
+      {
+        id: 'audio-synthesis',
+        title: 'Acoustics & Harmonic Overtones',
+        planet: 'Planet Studio',
+        sector: 'ARTSANDLIFE',
+        grade: 'High School (9-12)',
+        tagText: 'Sound / Music',
+        tagClass: 'tag-art',
+        synopsis: 'Synthesize complex timbre using fundamental sine waves, harmonic overtones, and oscilloscope views.',
+        standard: 'National Core Arts Standards: MU:Cr1.1.H.1a & NGSS HS-PS4-1',
+        apparatus: 'Browser-based Web Audio synthesizer, tuning forks (256Hz, 512Hz), sound level meter.',
+        labPhases: [
+          'Phase A (Setup): Strike 256Hz fork and observe pure sinusoidal trace on the digital oscilloscope.',
+          'Phase B (Execution): Add 2nd and 3rd harmonics; listen to sound shift from dull tone to bright brass timbre.',
+          'Phase C (Synthesis): Construct a square wave solely by summing odd harmonics with decaying amplitude.'
+        ],
+        explorer: 'Identify the difference in sound quality between a flute (pure tone) and a violin (rich harmonics).',
+        navigator: 'Calculate the frequencies of the 1st through 4th harmonics for a 440Hz standard pitch.',
+        commander: 'Explain Fourier analysis: how any periodic acoustic waveform can be decomposed into pure sines.',
+        rubric: 'Mastery: Accurate waveform generation with complete physical explanation of harmonic resonance.',
+        exitTicket: 'Why do two instruments playing the exact same pitch and loudness sound completely distinct?'
+      },
+      {
+        id: 'circadian-biology',
+        title: 'Circadian Biology & Sleep Optimization',
+        planet: 'Planet Wellness',
+        sector: 'ARTSANDLIFE',
+        grade: 'High School (9-12)',
+        tagText: 'Biology / Health',
+        tagClass: 'tag-art',
+        synopsis: 'Investigate how melanopsin retinal ganglion cells regulate melatonin, core body temperature, and deep sleep cycles.',
+        standard: 'National Health Education Standards: NHES 1.12.1 & NGSS HS-LS1-3',
+        apparatus: 'Lux light meter app, 7-day sleep journal templates, digital infrared thermometer.',
+        labPhases: [
+          'Phase A (Setup): Measure ambient lux levels in bedrooms across daylight, fluorescent light, and screen light.',
+          'Phase B (Execution): Track 7 days of sleep onset latency versus screen exposure 60 minutes prior to bed.',
+          'Phase C (Synthesis): Formulate an optimal evening protocol based on body temperature and light reduction.'
+        ],
+        explorer: 'Log sleep hours and rank morning cognitive readiness on a 1-to-10 scale.',
+        navigator: 'Correlate bedtime room temperature (65°F vs 75°F) with self-reported nighttime awakenings.',
+        commander: 'Map the biological signaling pathway from retinal blue-light exposure to pineal gland melatonin suppression.',
+        rubric: 'Mastery: Grounded, empirical 7-day data correlation with peer-reviewed circadian literature citations.',
+        exitTicket: 'Why does wearing amber glasses fail to fully fix sleep if cognitive arousal from scrolling remains high?'
+      },
+      {
+        id: 'biometrics-vo2',
+        title: 'Cardiovascular Dynamics & Recovery Beats',
+        planet: 'Planet Wellness',
+        sector: 'ARTSANDLIFE',
+        grade: 'Middle School (6-8)',
+        tagText: 'Physiology',
+        tagClass: 'tag-art',
+        synopsis: 'Calculate heart rate recovery (HRR) and stroke volume adaptations after 3-minute aerobic bursts.',
+        standard: 'National Health Education Standards: NHES 2.8.2 & NGSS MS-LS1-3',
+        apparatus: 'Digital fingertip pulse oximeters, calibrated step-up platforms, metronome, stopwatches.',
+        labPhases: [
+          'Phase A (Setup): Record 60-second resting radial pulse and oxygen saturation baseline.',
+          'Phase B (Execution): Perform 3-minute Harvard step test cadence; measure pulse at 1, 2, and 3 minutes post-exercise.',
+          'Phase C (Synthesis): Plot recovery curve slope to evaluate autonomic nervous system balance.'
+        ],
+        explorer: 'Record heart rate before and after exercise; identify how fast breathing normalizes.',
+        navigator: 'Calculate recovery drop (Heart Rate Peak minus 1-minute post-test) and compare against fitness tiers.',
+        commander: 'Explain how regular aerobic training increases left ventricular volume, lowering resting heart rate.',
+        rubric: 'Mastery: Complete multi-stage recovery graphs with reasoned physiological defense of cardiac recovery rates.',
+        exitTicket: 'Why is a faster heart rate drop in the first 60 seconds after exercise a hallmark of superior cardiac health?'
+      }
+    ];
+
+    // 3. Render Mission Cards in the UI
+    function renderMissions(filterSector = 'ALL') {
+      const container = document.getElementById('missionGridContainer');
+      container.innerHTML = '';
+
+      const filtered = filterSector === 'ALL' 
+        ? lessonLibrary 
+        : lessonLibrary.filter(l => l.sector === filterSector);
+
+      filtered.forEach(lesson => {
+        const card = document.createElement('div');
+        card.className = 'mission-card';
+        card.onclick = () => loadLessonFromLibrary(lesson.id);
+
+        card.innerHTML = `
+          <div class="mission-card-top">
+            <div class="mission-meta">
+              <span class="tag ${lesson.tagClass}">${lesson.tagText}</span>
+              <span style="font-size:0.7rem; color:var(--text-muted); font-family:var(--font-mono);">${lesson.grade}</span>
+            </div>
+            <div class="mission-title">${lesson.title}</div>
+            <div class="mission-desc">${lesson.synopsis}</div>
+          </div>
+          <div class="mission-cta">
+            <span>${lesson.planet}</span>
+            <span>LAUNCH ➔</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Filter Chips Action
+    function filterMissions(sector, btn) {
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      renderMissions(sector);
+      playBeep(520, 0.08);
+    }
+
+    // 4. Load & Render Full 6-Module Tactical Blueprint
+    function loadLessonFromLibrary(lessonId) {
+      const lesson = lessonLibrary.find(l => l.id === lessonId);
+      if (!lesson) return;
+
+      // Update Form Inputs
+      document.getElementById('planetSelect').value = lesson.planet;
+      document.getElementById('gradeSelect').value = lesson.grade;
+      document.getElementById('topicInput').value = lesson.title;
+
+      // Select Planet on Radar
+      const p = planets.find(item => item.name === lesson.planet);
+      if (p) selectPlanet(p.name, p.sector, p.color, p.desc);
+
+      playBeep(750, 0.2);
+
+      // Render the Full 6-Module Blueprint
+      const output = `
+        <div style="color:#fff; line-height:1.6">
+          <div style="border-bottom:1px solid #233149; padding-bottom:12px; margin-bottom:16px">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="tag ${lesson.tagClass}" style="font-size:0.75rem">${lesson.sector} SECTOR</span>
+              <span style="font-size:0.8rem; font-family:var(--font-mono); color:var(--text-muted)">ID: ${lesson.id.toUpperCase()}</span>
+            </div>
+            <h2 style="color:var(--cyan); font-size:1.4rem; margin-top:6px;">🪐 MISSION DISPATCH: ${lesson.title}</h2>
+            <p style="font-size:0.85rem; color:#94a3b8">Target: <strong>${lesson.planet}</strong> | Band: <strong>${lesson.grade}</strong> | Standard: <strong>${lesson.standard}</strong></p>
+          </div>
+
+          <div class="module-box">
+            <h4>Module 1: The Intellectual Tension (Mission Briefing)</h4>
+            <p style="font-size:0.9rem">${lesson.synopsis} Scholars step into the role of lead investigators. They are provided with no ready-made answers; truth must be extracted through systematic testing and forensic documentation.</p>
+          </div>
+
+          <div class="module-box">
+            <h4>Module 2: Standards & Apparatus Matrix</h4>
+            <p style="font-size:0.88rem; margin-bottom:6px;"><strong>Aligned Rigor:</strong> ${lesson.standard}</p>
+            <p style="font-size:0.88rem; color:var(--text-muted);"><strong>Required Field Gear:</strong> ${lesson.apparatus}</p>
+          </div>
+
+          <div class="module-box">
+            <h4>Module 3: 3-Phase Tactical Hands-On Lab</h4>
+            <ul style="padding-left:20px; font-size:0.88rem; display:flex; flex-direction:column; gap:6px;">
+              <li><strong>Phase A (Setup & Calibration):</strong> ${lesson.labPhases[0]}</li>
+              <li><strong>Phase B (Execution & Anomaly Hunt):</strong> ${lesson.labPhases[1]}</li>
+              <li><strong>Phase C (Synthesis & Agora Defense):</strong> ${lesson.labPhases[2]}</li>
+            </ul>
+          </div>
+
+          <div class="module-box">
+            <h4>Module 4: Differentiated Runtimes & Tiers</h4>
+            <ul style="padding-left:20px; font-size:0.88rem; display:flex; flex-direction:column; gap:6px;">
+              <li><strong style="color:var(--green)">Tier 1 (Explorer):</strong> ${lesson.explorer}</li>
+              <li><strong style="color:var(--amber)">Tier 2 (Navigator):</strong> ${lesson.navigator}</li>
+              <li><strong style="color:var(--purple)">Tier 3 (Commander):</strong> ${lesson.commander}</li>
+            </ul>
+          </div>
+
+          <div class="module-box">
+            <h4>Module 5: Rapid Scoring Rubric</h4>
+            <p style="font-size:0.88rem">${lesson.rubric}</p>
+          </div>
+
+          <div class="module-box" style="border-left: 3px solid var(--amber)">
+            <h4 style="color:var(--amber)">Module 6: Agora Exit Ticket (The Gate Question)</h4>
+            <p style="font-size:0.95rem; font-style:italic;">"${lesson.exitTicket}"</p>
+            <span style="font-size:0.75rem; color:var(--text-muted); margin-top:4px; display:block;">Each scholar must submit their written justification before their terminal logs off.</span>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('blueprintRender').innerHTML = output;
+      document.getElementById('blueprintOutput').style.display = 'block';
+      document.getElementById('blueprintOutput').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 5. Custom Blueprint Generator for Manual Forms
+    function generateCustomBlueprint(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const name = document.getElementById('eduName').value;
+      const planet = document.getElementById('planetSelect').value;
+      const grade = document.getElementById('gradeSelect').value;
+      const topic = document.getElementById('topicInput').value;
+
+      playBeep(880, 0.25);
+
+      const html = `
+        <div style="color:#fff; line-height:1.6">
+          <div style="border-bottom:1px solid #233149; padding-bottom:12px; margin-bottom:16px">
+            <h2 style="color:var(--cyan); font-size:1.3rem;">🪐 BESPOKE DISPATCH: ${topic}</h2>
+            <p style="font-size:0.85rem; color:#94a3b8">Target: <strong>${planet}</strong> | Grade Band: <strong>${grade}</strong> | Commanding Officer: <strong>${name}</strong></p>
+          </div>
+
+          <div class="module-box">
+            <h4>Module 1: Mission Briefing (The Intellectual Hook)</h4>
+            <p style="font-size:0.9rem">Scholars arrive at ${planet} confronted with an unresolved empirical anomaly regarding ${topic}. Today's inquiry mandates structured, hands-on evidence collection to settle the dispute.</p>
+          </div>
+
+          <div class="module-box">
+            <h4>Module 2: Standards & Apparatus Matrix</h4>
+            <p style="font-size:0.88rem;"><strong>Primary Standard:</strong> Academic Rigor Framework (NGSS / CCSS / C3 Mastery Alignment).</p>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-top:4px;"><strong>Apparatus:</strong> Calibrated testing surfaces, stopwatch, sensor suite, and team data loggers.</p>
+          </div>
+
+          <div class="module-box">
+            <h4>Module 3: 3-Phase Tactical Hands-On Lab</h4>
+            <ul style="padding-left:20px; font-size:0.88rem; display:flex; flex-direction:column; gap:6px;">
+              <li><strong>Phase A (Setup):</strong> Secure physical testing apparatus; eliminate ambient environmental interference.</li>
+              <li><strong>Phase B (Execution):</strong> Conduct 15 controlled trials varying a single parameter; record tabular deviations.</li>
+              <li><strong>Phase C (Synthesis):</strong> Defend data trends against peer challenges in the open Agora.</li>
+            </ul>
+          </div>
+
+          <div class="module-box">
+            <h4>Module 4: Differentiated Pacing Tiers</h4>
+            <ul style="padding-left:20px; font-size:0.88rem; display:flex; flex-direction:column; gap:6px;">
+              <li><strong style="color:var(--green)">Explorer:</strong> Scaffolded data table with guided step-by-step arithmetic.</li>
+              <li><strong style="color:var(--amber)">Navigator:</strong> Independent measurement, line plot generation, and variance identification.</li>
+              <li><strong style="color:var(--purple)">Commander:</strong> Advanced error propagation modeling and multi-variable synthesis.</li>
+            </ul>
+          </div>
+
+          <div class="module-box">
+            <h4>Module 5: Rapid Scoring Rubric</h4>
+            <p style="font-size:0.88rem"><strong>Mastery:</strong> Comprehensive data set with accurate statistical bounds and lucid conceptual justification.</p>
+          </div>
+
+          <div class="module-box" style="border-left: 3px solid var(--amber)">
+            <h4 style="color:var(--amber)">Module 6: Agora Exit Ticket</h4>
+            <p style="font-size:0.95rem; font-style:italic;">"If the primary experimental variable was halved while the environment stayed constant, how would the equilibrium change?"</p>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('blueprintRender').innerHTML = html;
+      document.getElementById('blueprintOutput').style.display = 'block';
+      document.getElementById('blueprintOutput').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 6. Canvas 3D Orrery Loop
     const canvas = document.getElementById('orreryCanvas');
     const ctx = canvas.getContext('2d');
     let angle = 0;
@@ -472,7 +929,6 @@
     }
     drawOrrery();
 
-    // Planet Selection via Buttons
     function selectPlanet(name, sector, color, desc) {
       currentPlanet = planets.find(p => p.name === name) || currentPlanet;
       document.getElementById('planetSelect').value = name;
@@ -480,7 +936,6 @@
       document.getElementById('telemetryName').style.color = color;
       document.getElementById('telemetrySector').textContent = sector + ' SECTOR';
       document.getElementById('telemetryDesc').textContent = desc;
-      playBeep(440, 0.1);
     }
 
     function onSelectChange(sel) {
@@ -488,33 +943,13 @@
       if (p) selectPlanet(p.name, p.sector, p.color, p.desc);
     }
 
-    // Preset One-Click Lessons
-    function loadLessonPreset(type) {
-      if (type === 'coin') {
-        selectPlanet('Planet Quantum', 'STEM', '#00e5ff', 'Physics & Advanced Sciences');
-        document.getElementById('topicInput').value = 'Investigating Superposition & Probability States via Multi-Trial Coin Trials';
-        document.getElementById('gradeSelect').value = 'Middle School (6-8)';
-      } else if (type === 'senate') {
-        selectPlanet('Planet Civics', 'HUMANITIES', '#ffb300', 'Governance & Ethical Systems');
-        document.getElementById('topicInput').value = 'The Agrarian Crisis: Reenacting the Gracchi Reform Assemblies';
-        document.getElementById('gradeSelect').value = 'High School (9-12)';
-      } else if (type === 'fractal') {
-        selectPlanet('Planet Studio', 'ARTSANDLIFE', '#d946ef', 'Visual & Sonic Design');
-        document.getElementById('topicInput').value = 'Algorithmic Aesthetics: Drawing Julia Sets and Pinecone Ratios';
-        document.getElementById('gradeSelect').value = 'Middle School (6-8)';
-      }
-      playBeep(660, 0.15);
-      generateBlueprint(new Event('submit'));
-    }
-
-    // Audio Cue Synthesizer
     function playBeep(freq, duration) {
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
@@ -523,57 +958,14 @@
       } catch (e) {}
     }
 
-    // Generate 6-Module Tactical Blueprint
-    function generateBlueprint(e) {
-      if (e && e.preventDefault) e.preventDefault();
-      const name = document.getElementById('eduName').value;
-      const planet = document.getElementById('planetSelect').value;
-      const grade = document.getElementById('gradeSelect').value;
-      const topic = document.getElementById('topicInput').value;
-
-      playBeep(880, 0.25);
-
-      const html = `
-        <div style="color:#fff; line-height:1.6">
-          <div style="border-bottom:1px solid #233149; padding-bottom:10px; margin-bottom:15px">
-            <h3 style="color:var(--cyan); margin-bottom:4px;">🪐 MISSION DISPATCH: ${topic}</h3>
-            <p style="font-size:0.85rem; color:#94a3b8">Target: <strong>${planet}</strong> | Band: <strong>${grade}</strong> | Officer: <strong>${name}</strong></p>
-          </div>
-          
-          <h4 style="color:#00e5ff; margin-top:10px;">Module 1: Mission Briefing (The Intellectual Hook)</h4>
-          <p style="font-size:0.9rem">Scholars enter the station facing an unresolved paradox regarding ${topic}. Today's expedition requires direct empirical testing to resolve baseline variance.</p>
-
-          <h4 style="color:#00e5ff; margin-top:10px;">Module 2: Standards & Evidence Matrix</h4>
-          <p style="font-size:0.9rem">Primary Standard: <strong>NGSS / CCSS Rigor Alignment</strong> • Core Evidence: Recorded tabular data and statistical synthesis.</p>
-
-          <h4 style="color:#00e5ff; margin-top:10px;">Module 3: 3-Phase Tactical Hands-On Lab</h4>
-          <ul style="padding-left:20px; font-size:0.9rem">
-            <li><strong>Phase A (Setup):</strong> Calibrate physical tools and draft baseline hypothesis.</li>
-            <li><strong>Phase B (Execution):</strong> Run 10 consecutive trials and capture anomaly metrics.</li>
-            <li><strong>Phase C (Synthesis):</strong> Defend variance findings against class peers in the Agora.</li>
-          </ul>
-
-          <h4 style="color:#00e5ff; margin-top:10px;">Module 4: Differentiated Runtimes</h4>
-          <p style="font-size:0.9rem">Tiers: <em>Explorer (Scaffolded tables)</em> | <em>Navigator (Standard trials)</em> | <em>Commander (Advanced error-propagation modeling)</em>.</p>
-
-          <h4 style="color:#00e5ff; margin-top:10px;">Module 5: Rapid Scoring Rubric</h4>
-          <p style="font-size:0.9rem"><strong>Mastery:</strong> Complete data capture with zero protocol violations. <strong>Approaching:</strong> Data collected but missing margin of error.</p>
-
-          <h4 style="color:#00e5ff; margin-top:10px;">Module 6: Agora Exit Ticket</h4>
-          <p style="font-size:0.9rem"><em>"If the primary trial variable was doubled, how would the equilibrium shift?"</em> (Submitted in writing before leaving the Holo-Lab).</p>
-        </div>
-      `;
-
-      document.getElementById('blueprintRender').innerHTML = html;
-      document.getElementById('blueprintOutput').style.display = 'block';
-      document.getElementById('blueprintOutput').scrollIntoView({ behavior: 'smooth' });
-    }
-
     function copyBlueprint() {
       const content = document.getElementById('blueprintRender').innerText;
       navigator.clipboard.writeText(content);
-      alert('Blueprint copied to clipboard!');
+      alert('Tactical Blueprint copied to clipboard!');
     }
+
+    // Initialize Library on Load
+    renderMissions('ALL');
   </script>
 </body>
 </html>
